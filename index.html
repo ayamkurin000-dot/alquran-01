@@ -717,6 +717,9 @@ const ayat = (s,a) => DATA.a[s-1][a-1];
    Di sini diganti singkatan huruf Arab biasa (seperti tercetak di mushaf) / gambar SVG, jadi pasti tampil. */
 const WQ = { '\u06D6':'صلى', '\u06D7':'قلى', '\u06D8':'م', '\u06D9':'لا', '\u06DA':'ج', '\u06DB':'∴', '\u06DC':'س' };
 function arH(t){
+  /* Font mushaf Hafs tidak menggambar U+0657/U+0656 dengan benar pada "ه" (jadi tampak seperti fathatain / hilang).
+     Diganti ke bentuk Utsmani: هٗ → هُۥ , هٖ → هِۦ */
+  t = t.replace(/\u0647\u0657/g, '\u0647\u064F\u06E5').replace(/\u0647\u0656/g, '\u0647\u0650\u06E6');
   return esc(t)
     .replace(/\s*\u06DE\s*/g, ' <svg class="rub" aria-hidden="true"><use href="#rub"/></svg> ')
     .replace(/\s*\u08D6/g, ' <span class="wq rk" aria-hidden="true">ع</span>')
