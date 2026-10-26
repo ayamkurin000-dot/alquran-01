@@ -304,12 +304,17 @@ input[type=range]{width:100%;height:36px;accent-color:var(--accent2);background:
 .hero-by{margin:0;font-family:var(--f-bsm);font-weight:700;font-size:1.2rem;line-height:1.6}
 .hero-by a{color:var(--accent2);text-decoration:none}
 .hero-by a:active{opacity:.7}
-.lb{position:fixed;inset:0;z-index:120;display:grid;place-items:center;background:rgba(0,0,0,.82);padding:1rem;animation:lbin .2s}
-.lb figure{margin:0;text-align:center;max-width:min(92vw,520px)}
-.lb img{display:block;max-width:100%;max-height:78vh;margin:0 auto;border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.6)}
-.lb figcaption{margin-top:.7rem;color:#f1e8d0;font-size:.9rem}
-.lb button{position:absolute;top:calc(.6rem + env(safe-area-inset-top,0px));right:.6rem;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.15);color:#fff;display:grid;place-items:center}
+.logo-box{position:fixed;inset:0;z-index:120;display:grid;place-items:center;background:rgba(0,0,0,.82);padding:1rem;animation:lbin .2s}
+.logo-box figure{margin:0;text-align:center;max-width:min(92vw,520px)}
+.logo-box img{display:block;max-width:100%;max-height:78vh;margin:0 auto;border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.6)}
+.logo-box figcaption{margin-top:.7rem;color:#f1e8d0;font-size:.9rem}
+.logo-box button{position:absolute;top:calc(.6rem + env(safe-area-inset-top,0px));right:.6rem;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.15);color:#fff;display:grid;place-items:center}
 @keyframes lbin{from{opacity:0}to{opacity:1}}
+.wq{display:inline-block;font-family:var(--f-ar);font-size:.5em;line-height:1;color:var(--accent);vertical-align:.55em;margin:0 .15em;font-weight:700;white-space:nowrap}
+.wq.rk{font-size:.46em;border:1.2px solid var(--accent);border-radius:50%;min-width:1.55em;height:1.55em;display:inline-grid;place-items:center;vertical-align:.35em;padding-top:.1em}
+.wq.sj{font-size:.42em;vertical-align:.7em}
+.wq.dt{font-family:var(--f-ui)}
+.rub{width:.8em;height:.8em;vertical-align:-.05em;color:var(--accent);margin:0 .2em}
 </style>
 </head>
 <body data-view="home">
@@ -328,7 +333,8 @@ input[type=range]{width:100%;height:36px;accent-color:var(--accent2);background:
  <symbol id="i-bm" viewBox="0 0 24 24"><path d="M7 4h10v16l-5-4-5 4z"/></symbol>
  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5.5 15V6.5A2.5 2.5 0 0 1 8 4h8"/></symbol>
  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
- <symbol id="i-tr" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+ <symbol id="rub" viewBox="0 0 24 24"><rect x="5.5" y="5.5" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="5.5" y="5.5" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(45 12 12)"/><circle cx="12" cy="12" r="2.3" fill="currentColor"/></symbol>
+  <symbol id="i-tr" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></symbol>
 
  <!-- medali nomor ayat (rosette 8 sudut) — warna lewat --nf / --ns -->
@@ -703,6 +709,17 @@ const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
 const mem = {};
 const store = (k, v) => { try { if (v === undefined) { const r = localStorage.getItem(k); return r ? JSON.parse(r) : null; } localStorage.setItem(k, JSON.stringify(v)); } catch(e) { if (v === undefined) return mem[k] ?? null; mem[k] = v; } };
 const ayat = (s,a) => DATA.a[s-1][a-1];
+/* Tanda waqaf berdiri-sendiri (setelah spasi) sering jadi kotak "▯" di HP yang font-nya tidak memilikinya.
+   Di sini diganti singkatan huruf Arab biasa (seperti tercetak di mushaf) / gambar SVG, jadi pasti tampil. */
+const WQ = { '\u06D6':'صلى', '\u06D7':'قلى', '\u06D8':'م', '\u06D9':'لا', '\u06DA':'ج', '\u06DB':'∴', '\u06DC':'س' };
+function arH(t){
+  return esc(t)
+    .replace(/\s*\u06DE\s*/g, ' <svg class="rub" aria-hidden="true"><use href="#rub"/></svg> ')
+    .replace(/\s*\u08D6/g, ' <span class="wq rk" aria-hidden="true">ع</span>')
+    .replace(/\s*\u06E9/g, ' <span class="wq sj" aria-hidden="true">سجدة</span>')
+    .replace(/(\s)([\u06D6-\u06DC])(?=(\s|$|.))/g, (m, sp, ch, nx) => sp + `<span class="wq${ch==='\u06DB'?' dt':''}" aria-hidden="true">${WQ[ch]}</span>` + (nx && !/\s/.test(nx) ? ' ' : ''));
+}
+
 const arti = (s,a) => DATA.t[s-1][a-1];
 const icon = (id, cls='ic') => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
 const medal = (txt, extra='') => `<svg class="md ${extra}" viewBox="0 0 44 44" aria-hidden="true"><use href="#medal"/><text x="22" y="22.8" class="${String(txt).length>2?'sm':''}">${txt}</text></svg>`;
@@ -897,7 +914,7 @@ function renderHomeBody(){
       const g = juzSegs(i+1), a = g[0], z = g[g.length-1];
       return `<a class="row" href="#/j/${i+1}">${medal(ad(i+1))}<span class="rt"><b>Juz ${i+1}</b><small>${esc(SUR[a.s-1].lat)} ${a.from} – ${esc(SUR[z.s-1].lat)} ${z.to}</small></span><span class="rar" lang="ar" dir="rtl">جزء ${ad(i+1)}</span></a>`; }).join('');
   else p.innerHTML = BM.length ? BM.map(b => `<div class="row" style="align-items:flex-start;flex-wrap:wrap"><a href="#/s/${b.s}/${b.a}" style="display:flex;gap:.8rem;flex:1;min-width:0;text-decoration:none;color:inherit;align-items:flex-start">${medal(ad(b.a))}<span class="rt"><b>${esc(SUR[b.s-1].lat)} : ${b.a}</b>
-        <span class="har" lang="ar" dir="rtl" style="display:block;font-family:var(--f-ar);font-size:1.15rem;line-height:1.9;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw">${esc(ayat(b.s,b.a))}</span>
+        <span class="har" lang="ar" dir="rtl" style="display:block;font-family:var(--f-ar);font-size:1.15rem;line-height:1.9;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw">${arH(ayat(b.s,b.a))}</span>
         <small style="white-space:normal">${esc(arti(b.s,b.a))}</small></span></a><button class="del" data-s="${b.s}" data-a="${b.a}" aria-label="Hapus penanda ${esc(SUR[b.s-1].lat)} ayat ${b.a}">${icon('i-trash')}</button></div>`).join('')
       : `<div class="empty">${medal('★')}<p><b>Belum ada penanda</b></p><p>Ketuk sebuah ayat saat membaca, lalu tekan ikon penanda di bawah.</p></div>`;
   $$('.del', p).forEach(b => b.onclick = () => { toggleBm(+b.dataset.s, +b.dataset.a); toast('Penanda dihapus'); renderHomeBody(); });
@@ -912,7 +929,7 @@ function renderSearch(hb){
     if (ref.s>=1 && ref.s<=114){
       const x = SUR[ref.s-1], ok = ref.a>=1 && ref.a<=x.cnt;
       html += `<div class="list"><div class="sec">Langsung ke ayat</div>` + (ok
-        ? `<a class="hit" href="#/s/${ref.s}/${ref.a}"><div class="ref">${esc(x.lat)} · ${ref.s}:${ref.a}</div><div class="har" lang="ar">${esc(ayat(ref.s,ref.a))}</div><div class="htr">${esc(arti(ref.s,ref.a))}</div></a>`
+        ? `<a class="hit" href="#/s/${ref.s}/${ref.a}"><div class="ref">${esc(x.lat)} · ${ref.s}:${ref.a}</div><div class="har" lang="ar">${arH(ayat(ref.s,ref.a))}</div><div class="htr">${esc(arti(ref.s,ref.a))}</div></a>`
         : `<p class="empty" style="padding:.6rem">${esc(x.lat)} hanya memiliki ${x.cnt} ayat.</p><a class="row" href="#/s/${x.n}">${medal(ad(x.n))}<span class="rt"><b>Buka ${esc(x.lat)}</b></span></a>`) + `</div>`;
       hb.innerHTML = html; return;
     }
@@ -929,7 +946,7 @@ function renderSearch(hb){
     const hlWords = arabic ? [] : q.trim().split(/\s+/).filter(Boolean);
     html += `<div class="sec">Ayat (${res.length}${res.length>=1?'':''})</div>`;
     if (!res.length) html += `<p class="empty" style="padding:1rem">Tidak ada ayat yang cocok.</p>`;
-    html += res.slice(0, searchLimit).map(r => `<a class="hit" href="#/s/${r.s}/${r.a}"><div class="ref">${esc(SUR[r.s-1].lat)} · ${r.s}:${r.a}</div><div class="har" lang="ar">${esc(ayat(r.s,r.a))}</div><div class="htr">${hl(arti(r.s,r.a), hlWords)}</div></a>`).join('');
+    html += res.slice(0, searchLimit).map(r => `<a class="hit" href="#/s/${r.s}/${r.a}"><div class="ref">${esc(SUR[r.s-1].lat)} · ${r.s}:${r.a}</div><div class="har" lang="ar">${arH(ayat(r.s,r.a))}</div><div class="htr">${hl(arti(r.s,r.a), hlWords)}</div></a>`).join('');
     if (res.length > searchLimit) html += `<button class="more" id="more">Tampilkan lebih banyak (${res.length - searchLimit})</button>`;
   } else if (!su.length) html += `<p class="empty">Nomor surat 1–114.</p>`;
   html += `</div>`;
@@ -968,7 +985,7 @@ function itemHTML(it){
   if (it.t === 'bsm') return `<div class="bsm" aria-label="Bismillah"><svg class="bo" aria-hidden="true"><use href="#bsm-orn"/></svg><span class="bt" lang="ar" dir="rtl">${esc(ayat(1,1))}</span><svg class="bo r" aria-hidden="true"><use href="#bsm-orn"/></svg></div>`;
   if (it.t === 'cont') return `<div class="cont"><span>Q.S. ${esc(SUR[it.s-1].lat)} (lanjutan)</span></div>`;
   const { s, a } = it, n = ad(a);
-  return `<article class="ay${isBm(s,a)?' bm':''}" id="a-${s}-${a}" data-s="${s}" data-a="${a}"><p class="ar" lang="ar" dir="rtl">${esc(ayat(s,a))}<button class="num" type="button" aria-label="Ayat ${a}, pilih" aria-pressed="false">${medal(n)}</button></p><p class="tr"><b>${a}</b>${esc(arti(s,a))}</p></article> `;
+  return `<article class="ay${isBm(s,a)?' bm':''}" id="a-${s}-${a}" data-s="${s}" data-a="${a}"><p class="ar" lang="ar" dir="rtl">${arH(ayat(s,a))}<button class="num" type="button" aria-label="Ayat ${a}, pilih" aria-pressed="false">${medal(n)}</button></p><p class="tr"><b>${a}</b>${esc(arti(s,a))}</p></article> `;
 }
 function openReader(o){
   const same = R && R.mode===o.mode && R.id===o.id;
@@ -1166,14 +1183,14 @@ function closeSheet(instant){
 }
 function openLogo(href){
   closeLogo();
-  const d = document.createElement('div'); d.className = 'lb'; d.id = 'lb'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true'); d.setAttribute('aria-label','Logo NU – NKRI');
+  const d = document.createElement('div'); d.className = 'logo-box'; d.id = 'logobox'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true'); d.setAttribute('aria-label','Logo NU – NKRI');
   d.innerHTML = `<figure><img alt="Logo NU dan NKRI bergandengan tangan" src="logo/logo-nu.jpg"><figcaption>Mannixs-21 · NU &amp; NKRI</figcaption></figure><button aria-label="Tutup">${icon('i-x')}</button>`;
   d.querySelector('img').onerror = () => { closeLogo(); window.open(href, '_blank', 'noopener'); };
   d.onclick = closeLogo; document.body.appendChild(d); d.querySelector('button').focus();
 }
-function closeLogo(){ const d = $('#lb'); if (d) d.remove(); }
+function closeLogo(){ const d = $('#logobox'); if (d) d.remove(); }
 document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('.hero-by a'); if (!a) return; e.preventDefault(); openLogo(a.href); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#lb')) closeLogo(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#logobox')) closeLogo(); });
 document.addEventListener('keydown', e => {
   if (!SHEET) return;
   if (e.key === 'Escape'){ e.preventDefault(); closeSheet(); return; }
