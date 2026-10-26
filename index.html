@@ -56,7 +56,9 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;str
 [hidden]{display:none!important}
 
 /* ---------- bar atas ---------- */
-.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:.4rem;
+#topbar{position:sticky;top:0;z-index:30}
+body[data-view=home] #topbar{position:static}
+.bar{position:relative;display:flex;align-items:center;gap:.4rem;
   padding:calc(.45rem + env(safe-area-inset-top,0px)) .6rem .45rem;min-height:56px;
   background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line)}
@@ -82,7 +84,7 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;str
 .resume small{display:block;color:var(--ink2);font-size:.78rem}
 .resume b{display:block}
 .resume .go{margin-left:auto;color:var(--accent2)}
-.tabs{position:sticky;top:56px;z-index:20;display:flex;gap:.3rem;padding:.5rem .8rem;background:var(--bg)}
+.tabs{position:sticky;top:0;z-index:20;display:flex;gap:.3rem;padding:.5rem .8rem;background:var(--bg)}
 .tabs button,.stabs button{flex:1;height:42px;border-radius:12px;border:1px solid var(--line);background:transparent;font-weight:600;font-size:.92rem;color:var(--ink2)}
 .tabs button[aria-selected=true],.stabs button[aria-selected=true]{background:var(--paper);color:var(--ink);border-color:var(--accent);box-shadow:0 1px 0 var(--accent)}
 .badge{display:inline-block;min-width:1.35em;padding:0 .35em;margin-left:.3em;border-radius:1em;background:var(--accent);color:var(--paper);font-size:.72rem;line-height:1.5}
@@ -165,7 +167,7 @@ mark{background:color-mix(in srgb,var(--accent) 28%,transparent);color:inherit;b
 .bsm .bo{flex:1 1 0;min-width:14px;max-width:84px;height:12px;overflow:visible}
 .bsm .bo.r{transform:scaleX(-1)}
 .bsm .bt{flex:0 1 auto;font-family:var(--f-bsm);font-size:min(calc(var(--ar-size)*1.3),8.6vw);line-height:1.9;color:var(--ink);text-align:center;direction:rtl;font-weight:700;padding:0 .1rem}
-.ay{display:block;padding:.75rem .35rem .8rem;margin:0;border-radius:12px;scroll-margin-top:84px;cursor:pointer}
+.ay{display:block;padding:.75rem .35rem .8rem;margin:0;border-radius:12px;scroll-margin-top:114px;cursor:pointer}
 .ay+.ay{border-top:1px dashed var(--line);border-radius:0 0 12px 12px}
 .ay .ar{display:block;margin:0;direction:rtl;text-align:right;font-family:var(--f-ar);font-size:var(--ar-size);line-height:2.2;color:var(--ink);
   font-feature-settings:"liga","calt";word-spacing:.04em}
@@ -268,6 +270,38 @@ input[type=range]{width:100%;height:36px;accent-color:var(--accent2);background:
   .paper{padding-left:2rem;padding-right:2rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* ---------- bar pembaca (tetap di atas, tidak ikut scroll) ---------- */
+.bar.rd{flex-direction:column;align-items:stretch;gap:0;padding-bottom:.3rem;min-height:0}
+.bar .r1{display:flex;align-items:center;gap:.4rem;min-height:48px}
+.bar .r2{display:flex;align-items:center;gap:.2rem;padding:0 .15rem}
+.szb{width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:var(--ink);flex:none;display:grid;place-items:center;
+  line-height:1;font-family:var(--f-ui);font-weight:700}
+.szb:active{background:var(--soft)}
+.bar .r2 input[type=range]{flex:1;min-width:0;height:32px;margin:0}
+.tg{flex:none;height:34px;margin-left:.2rem;padding:0 .75rem 0 .6rem;border-radius:17px;border:1.5px solid var(--accent);background:transparent;
+  display:flex;align-items:center;gap:.3rem;font-weight:600;font-size:.8rem;color:var(--ink)}
+.tg svg.ic{width:17px;height:17px}
+.tg[aria-pressed=true]{background:color-mix(in srgb,var(--accent2) 22%,transparent);border-color:var(--accent2)}
+
+/* ---------- banner beranda ---------- */
+.homebar{display:flex;justify-content:flex-end;padding:calc(.15rem + env(safe-area-inset-top,0px)) .6rem 0}
+.hero{--f1:var(--accent);--f2:var(--accent2);--cs:32px;position:relative;isolation:isolate;margin:.2rem .8rem .3rem;padding:1.15rem .8rem 1rem;text-align:center;
+  border:3px solid var(--accent2);border-radius:14px;background:color-mix(in srgb,var(--accent2) 14%,var(--paper))}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:var(--accent);opacity:.2;
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6'%3E%3Crect x='9' y='9' width='28' height='28'/%3E%3Crect x='9' y='9' width='28' height='28' transform='rotate(45 23 23)'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6'%3E%3Crect x='9' y='9' width='28' height='28'/%3E%3Crect x='9' y='9' width='28' height='28' transform='rotate(45 23 23)'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size:46px 46px;mask-size:46px 46px}
+.hero::after{content:"";position:absolute;inset:5px;border:1px solid var(--accent);opacity:.75;border-radius:8px;pointer-events:none}
+.hero .cn.tl{top:6px;left:6px}.hero .cn.tr{top:6px;right:6px}.hero .cn.bl{bottom:6px;left:6px}.hero .cn.br{bottom:6px;right:6px}
+.hero-t{display:flex;align-items:center;justify-content:center;gap:.6rem}
+.ho{width:clamp(34px,11vw,64px);height:18px;color:var(--accent);flex:none}
+.ho.r{transform:scaleX(-1)}
+.hero-ar{font-family:var(--f-bsm);font-size:clamp(2rem,9.5vw,2.9rem);line-height:1.55;margin:0;color:var(--accent2);font-weight:700}
+.hero-sub{margin:0 0 .15rem;color:var(--ink2);font-size:1.02rem}
+.hero-by{margin:0;font-family:var(--f-bsm);font-weight:700;font-size:1.2rem;line-height:1.6}
+.hero-by a{color:var(--accent2);text-decoration:none}
+.hero-by a:active{opacity:.7}
 </style>
 </head>
 <body data-view="home">
@@ -286,7 +320,8 @@ input[type=range]{width:100%;height:36px;accent-color:var(--accent2);background:
  <symbol id="i-bm" viewBox="0 0 24 24"><path d="M7 4h10v16l-5-4-5 4z"/></symbol>
  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5.5 15V6.5A2.5 2.5 0 0 1 8 4h8"/></symbol>
  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
- <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></symbol>
+ <symbol id="i-tr" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></symbol>
 
  <!-- medali nomor ayat (rosette 8 sudut) — warna lewat --nf / --ns -->
  <symbol id="medal" viewBox="0 0 44 44">
@@ -374,7 +409,8 @@ input[type=range]{width:100%;height:36px;accent-color:var(--accent2);background:
  <symbol id="m-star" viewBox="0 0 16 16" fill="var(--paper)" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round">
   <rect x="3" y="3" width="10" height="10"/><rect x="3" y="3" width="10" height="10" transform="rotate(45 8 8)" fill="none"/><circle cx="8" cy="8" r="1.7" fill="currentColor" stroke="none"/>
  </symbol>
-</svg>
+  <symbol id="hero-orn" viewBox="0 0 70 18" preserveAspectRatio="xMaxYMid meet"><path d="M0 9H44" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="52" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="52" cy="9" r="2.2" fill="currentColor"/><path d="M64 4.5l4.5 4.5-4.5 4.5-4.5-4.5z" fill="currentColor"/></symbol>
+ </svg>
 
 <div id="app">
  <div id="topbar"></div>
@@ -662,6 +698,29 @@ const ayat = (s,a) => DATA.a[s-1][a-1];
 const arti = (s,a) => DATA.t[s-1][a-1];
 const icon = (id, cls='ic') => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
 const medal = (txt, extra='') => `<svg class="md ${extra}" viewBox="0 0 44 44" aria-hidden="true"><use href="#medal"/><text x="22" y="22.8" class="${String(txt).length>2?'sm':''}">${txt}</text></svg>`;
+
+/* Pusatkan angka di dalam medali berdasarkan ukuran tinta huruf sebenarnya (bukan kotak font),
+   sehingga tepat di tengah apa pun jenis huruf Arab yang dipakai. */
+let FG = 0; const MC = new Map(); let _mctx = null;
+function centerMedals(root){
+  root = root || document;
+  if (!_mctx) _mctx = document.createElement('canvas').getContext('2d');
+  root.querySelectorAll('.md text:not([data-c="' + FG + '"])').forEach(el => {
+    const cs = getComputedStyle(el), fs = parseFloat(cs.fontSize) || 15.5, txt = el.textContent;
+    const font = cs.fontWeight + ' ' + fs + 'px ' + cs.fontFamily, k = font + '|' + txt;
+    let m = MC.get(k);
+    if (!m){
+      _mctx.font = font;
+      const t = _mctx.measureText(txt);
+      if (t.actualBoundingBoxAscent === undefined) m = { skip:true };
+      else m = { x: 22 + t.width/2 - (t.actualBoundingBoxRight - t.actualBoundingBoxLeft)/2,
+                 y: 22 + (t.actualBoundingBoxAscent - t.actualBoundingBoxDescent)/2 };
+      MC.set(k, m);
+    }
+    if (!m.skip){ el.setAttribute('x', m.x.toFixed(2)); el.setAttribute('y', m.y.toFixed(2)); el.style.dominantBaseline = 'alphabetic'; }
+    el.dataset.c = FG;
+  });
+}
 let toastT;
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),1900); }
 
@@ -713,6 +772,8 @@ function applyAll(){
   $('meta[name=theme-color]').setAttribute('content', th.paper);
   document.body.classList.toggle('notr', !S.showTr);
   $$('.mushaf:not(.mini)').forEach(m => { m.dataset.frame = S.frame; $('.fx', m).innerHTML = decoHTML(S.frame); });
+  if (applyAll.f !== S.font){ applyAll.f = S.font; FG++; }
+  centerMedals(document); syncBar();
 }
 function decoHTML(fid){
   const f = FRAMES[fid]; let h = '';
@@ -785,8 +846,13 @@ const surahRow = x => `<a class="row" href="#/s/${x.n}">${medal(ad(x.n))}<span c
 let homeTab = store('qd.tab') || 'surat';
 let searchQ = '', searchLimit = 25;
 function topbarHome(){
-  $('#topbar').innerHTML = `<header class="bar home wrap"><div class="ttl"><b>Al-Qur'an</b><small>Digital · 114 surat · 30 juz</small></div>
-    <button class="ib" id="btnSet" aria-label="Pengaturan tampilan">${icon('i-set')}</button></header>`;
+  const cn = ['tl','tr','bl','br'].map(p => `<svg class="cn ${p}" viewBox="0 0 48 48" aria-hidden="true"><use href="#c-gulir"/></svg>`).join('');
+  $('#topbar').innerHTML = `<div class="homebar wrap"><button class="ib" id="btnSet" aria-label="Pengaturan tampilan">${icon('i-set')}</button></div>
+    <div class="wrap"><section class="hero">${cn}
+      <div class="hero-t"><svg class="ho" aria-hidden="true"><use href="#hero-orn"/></svg><h1 class="hero-ar" lang="ar" dir="rtl">القرآن الكريم</h1><svg class="ho r" aria-hidden="true"><use href="#hero-orn"/></svg></div>
+      <p class="hero-sub">Mushaf : Arab &amp; Terjemahan</p>
+      <p class="hero-by"><a href="https://ayamkurin000-dot.github.io/mushaf-alquran/logo/logo-nu.jpg" target="_blank" rel="noopener">❤️Mannixs-21 💕</a></p>
+    </section></div>`;
   $('#btnSet').onclick = e => openSheet('settings', e.currentTarget);
 }
 function showHome(){
@@ -809,7 +875,7 @@ function showHome(){
 }
 function renderHomeBody(){
   const hb = $('#homebody'); if (!hb) return;
-  if (searchQ.trim()) return renderSearch(hb);
+  if (searchQ.trim()){ renderSearch(hb); centerMedals(hb); return; }
   const resume = LAST ? `<a class="resume" href="${LAST.m==='j' ? `#/j/${LAST.id}/${LAST.s}-${LAST.a}` : `#/s/${LAST.s}/${LAST.a}`}">
       ${medal(ad(LAST.a))}<span><small>Lanjutkan membaca</small><b>${esc(SUR[LAST.s-1].lat)} · ayat ${LAST.a}</b></span><span class="go">${icon('i-fwd')}</span></a>` : '';
   hb.innerHTML = resume + `<div class="tabs" role="tablist" aria-label="Daftar">
@@ -827,6 +893,7 @@ function renderHomeBody(){
         <small style="white-space:normal">${esc(arti(b.s,b.a))}</small></span></a><button class="del" data-s="${b.s}" data-a="${b.a}" aria-label="Hapus penanda ${esc(SUR[b.s-1].lat)} ayat ${b.a}">${icon('i-trash')}</button></div>`).join('')
       : `<div class="empty">${medal('★')}<p><b>Belum ada penanda</b></p><p>Ketuk sebuah ayat saat membaca, lalu tekan ikon penanda di bawah.</p></div>`;
   $$('.del', p).forEach(b => b.onclick = () => { toggleBm(+b.dataset.s, +b.dataset.a); toast('Penanda dihapus'); renderHomeBody(); });
+  centerMedals(hb);
   hb.insertAdjacentHTML('beforeend', `<p class="about">Teks Al-Qur'an dan terjemahan: Kementerian Agama RI, melalui proyek quran-json (Rio Astamal, lisensi MIT).</p>`);
 }
 function renderSearch(hb){
@@ -859,7 +926,7 @@ function renderSearch(hb){
   } else if (!su.length) html += `<p class="empty">Nomor surat 1–114.</p>`;
   html += `</div>`;
   hb.innerHTML = html;
-  const mb = $('#more'); if (mb) mb.onclick = () => { searchLimit += 25; renderSearch(hb); };
+  const mb = $('#more'); if (mb) mb.onclick = () => { searchLimit += 25; renderSearch(hb); centerMedals(hb); };
 }
 
 /* =====================================================================
@@ -916,7 +983,7 @@ function openReader(o){
     es.forEach(e => R.vis.set(+e.target.dataset.i, e.isIntersecting));
     let best = Infinity; R.vis.forEach((v,i) => { if (v && i < best) best = i; });
     if (best < Infinity && performance.now() > R.lock){ const it = R.items[best]; setCur(it.s, it.a, false); }
-  }, { rootMargin:'-72px 0px -74% 0px' });
+  }, { rootMargin:'-112px 0px -74% 0px' });
   R.onScroll = () => { if (!R.interacted && window.scrollY > 40){ R.interacted = true; } };
   window.addEventListener('scroll', R.onScroll, { passive:true });
   R.box.addEventListener('click', e => {
@@ -939,7 +1006,7 @@ function renderMore(count){
   // tandai indeks & amati posisi
   const nodes = R.box.querySelectorAll('.ay:not([data-i])');
   nodes.forEach(n => { n.dataset.i = R.idxOf.get(bmKey(+n.dataset.s, +n.dataset.a)); R.io2.observe(n); if (R.sel && +n.dataset.s===R.sel[0] && +n.dataset.a===R.sel[1]) n.classList.add('sel'); });
-  R.n = end;
+  R.n = end; centerMedals(R.box);
   if (R.n >= R.items.length) finishReader();
 }
 function fill(){
@@ -993,10 +1060,44 @@ function step(dir){
   if (np >= R.ayIdx.length){ if (R.mode==='s' && R.id<114) location.hash = `#/s/${R.id+1}/1`; else if (R.mode==='j' && R.id<30) location.hash = `#/j/${R.id+1}`; else toast('Akhir bacaan'); return; }
   const it = R.items[R.ayIdx[np]]; jumpTo(it.s, it.a, true);
 }
+function applyText(){
+  const r = document.documentElement.style;
+  r.setProperty('--ar-size', S.ar + 'px'); r.setProperty('--tr-size', S.tr + 'px');
+  document.body.classList.toggle('notr', !S.showTr);
+}
+// jaga agar ayat yang sedang dibaca tidak "lompat" saat ukuran teks / terjemahan berubah
+function keepAnchor(fn){
+  const el = R && document.getElementById(`a-${R.cur[0]}-${R.cur[1]}`);
+  const before = el ? el.getBoundingClientRect().top : 0;
+  fn();
+  if (el){ const d = el.getBoundingClientRect().top - before; if (d) window.scrollBy(0, d); }
+}
+function syncBar(){
+  const sl = $('#rSz'); if (sl && +sl.value !== S.ar) sl.value = S.ar;
+  const tg = $('#btnTr'); if (tg) tg.setAttribute('aria-pressed', String(S.showTr));
+}
+function setSize(v){
+  S.ar = clamp(Math.round(v), 22, 60);
+  S.tr = clamp(Math.round(12 + (S.ar - 22) * 12 / 38), 12, 24);   // terjemahan ikut membesar/mengecil secara proporsional
+  keepAnchor(applyText); syncBar(); saveS();
+}
+function toggleTr(){
+  S.showTr = !S.showTr; keepAnchor(applyText); syncBar(); saveS();
+  toast(S.showTr ? 'Terjemahan ditampilkan' : 'Terjemahan disembunyikan');
+}
 function topbarReader(){
-  $('#topbar').innerHTML = `<header class="bar wrap"><a class="ib" href="#/" aria-label="Kembali ke daftar">${icon('i-back')}</a>
-    <div class="ttl"><b id="rt1"></b><small id="rt2"></small></div><button class="ib" id="btnSet" aria-label="Pengaturan tampilan">${icon('i-set')}</button></header>`;
+  $('#topbar').innerHTML = `<header class="bar rd wrap">
+    <div class="r1"><a class="ib" href="#/" aria-label="Kembali ke daftar">${icon('i-back')}</a>
+      <div class="ttl"><b id="rt1"></b><small id="rt2"></small></div><button class="ib" id="btnSet" aria-label="Pengaturan tampilan">${icon('i-set')}</button></div>
+    <div class="r2"><button class="szb" id="szMinus" aria-label="Perkecil teks" style="font-size:.9rem">A</button>
+      <input type="range" id="rSz" min="22" max="60" step="1" value="${S.ar}" aria-label="Ukuran teks">
+      <button class="szb" id="szPlus" aria-label="Perbesar teks" style="font-size:1.45rem">A</button>
+      <button class="tg" id="btnTr" aria-pressed="${S.showTr}" aria-label="Tampilkan atau sembunyikan terjemahan">${icon('i-tr')}<span>Terjemah</span></button></div></header>`;
   $('#btnSet').onclick = e => openSheet('settings', e.currentTarget);
+  $('#rSz').oninput = e => setSize(+e.target.value);
+  $('#szMinus').onclick = () => setSize(S.ar - 2);
+  $('#szPlus').onclick = () => setSize(S.ar + 2);
+  $('#btnTr').onclick = toggleTr;
   updateTitle();
 }
 function updateTitle(){
@@ -1151,6 +1252,7 @@ function route(){
 }
 window.addEventListener('hashchange', route);
 window.addEventListener('pagehide', () => { if (R && R.interacted) persistCur(); });
+if (document.fonts){ const refit = () => { FG++; centerMedals(document); }; document.fonts.addEventListener && document.fonts.addEventListener('loadingdone', refit); document.fonts.ready && document.fonts.ready.then(refit); }
 applyAll();
 route();
 </script>
