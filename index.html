@@ -85,7 +85,7 @@ svg{display:block}
 .xbtn:hover{background:var(--soft)}
 
 /* ===================== PEMBACA ===================== */
-#topbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:color-mix(in srgb,var(--paper) 92%,transparent);border-bottom:1.5px solid var(--accent);box-shadow:inset 0 -4px 0 color-mix(in srgb,var(--paper) 94%,transparent),inset 0 -5px 0 color-mix(in srgb,var(--accent) 45%,transparent);padding-top:env(safe-area-inset-top)}
+#topbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:linear-gradient(180deg,color-mix(in srgb,var(--accent) var(--h1,26%),var(--paper)) 0%,color-mix(in srgb,var(--accent) var(--h2,13%),var(--paper)) 100%);border-bottom:1.5px solid var(--accent);padding-top:env(safe-area-inset-top)}
 #topbar::before{content:"";pointer-events:none;position:absolute;inset:0;z-index:-1;background:var(--accent);opacity:.2;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6'%3E%3Crect x='7' y='7' width='30' height='30'/%3E%3Crect x='7' y='7' width='30' height='30' transform='rotate(45 22 22)'/%3E%3C/g%3E%3C/svg%3E") 0 0/44px 44px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6'%3E%3Crect x='7' y='7' width='30' height='30'/%3E%3Crect x='7' y='7' width='30' height='30' transform='rotate(45 22 22)'/%3E%3C/g%3E%3C/svg%3E") 0 0/44px 44px}
 #topbar .r1{display:flex;align-items:center;gap:6px;padding:6px 8px 2px}
 #topbar .ttl{flex:1;min-width:0;text-align:center;line-height:1.2}
@@ -94,7 +94,7 @@ svg{display:block}
 .ib{width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:10px;background:none;color:var(--accent2)}
 .ib:hover,.ib:focus-visible{background:var(--soft);outline:none}
 .ib svg{width:22px;height:22px}
-#topbar .r2{display:flex;align-items:center;gap:10px;padding:2px 12px 8px}
+#topbar .r2{display:flex;align-items:center;gap:10px;padding:7px 12px 11px;margin-top:2px;background:linear-gradient(180deg,color-mix(in srgb,color-mix(in srgb,var(--accent) var(--h3,9%),var(--paper)) 78%,transparent) 0%,color-mix(in srgb,color-mix(in srgb,var(--accent) var(--h4,24%),var(--paper)) 82%,transparent) 100%);border-top:1px solid color-mix(in srgb,var(--accent) 40%,transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--paper) 75%,transparent),inset 0 -4px 0 color-mix(in srgb,var(--paper) 90%,transparent),inset 0 -5px 0 color-mix(in srgb,var(--accent) 50%,transparent)}
 #topbar .aa{font-family:var(--ui);font-weight:700;color:var(--ink2);line-height:1}
 #topbar .aa.s{font-size:13px}#topbar .aa.b{font-size:24px}
 input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:28px;background:transparent;min-width:0}
@@ -502,7 +502,7 @@ function frameHTML(id){
 function applyTheme(){
   var T=THEMES[S.theme],r=document.documentElement.style;
   ['bg','paper','ink','ink2','accent','accent2','nfill','nink'].forEach(function(k){r.setProperty('--'+k,T[k])});
-  r.colorScheme=T.dark?'dark':'light';
+  r.colorScheme=T.dark?'dark':'light';r.setProperty('--h1',T.dark?'13%':'26%');r.setProperty('--h2',T.dark?'6%':'13%');r.setProperty('--h3',T.dark?'4%':'9%');r.setProperty('--h4',T.dark?'11%':'24%');
   $('metatheme').setAttribute('content',T.bg);
   var tx=TEXTURES[S.tex];
   r.setProperty('--tex',texURI(S.tex,!!T.dark));r.setProperty('--texop',tx.op||0);r.setProperty('--texsz',(tx.sz||300)+'px');
