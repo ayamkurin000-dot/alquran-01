@@ -138,10 +138,10 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 
 /* Nomor ayat: medali + angka di tengah (posisi dihitung via canvas) */
 .md{display:inline-block;width:1.32em;height:1.32em;vertical-align:-.42em;margin:0 .14em}
-.md text{text-rendering:geometricPrecision;fill:var(--nink);stroke:var(--nink);stroke-width:.22;paint-order:stroke;font-family:var(--arfont);font-weight:700;direction:ltr;unicode-bidi:isolate;font-feature-settings:'calt' 0,'liga' 0,'ccmp' 0,'kern' 0}  /* LPMQ membungkus angka dgn bingkai hias (calt) — dimatikan, medali kita sendiri */
+.md text{text-rendering:geometricPrecision;fill:var(--nink);font-family:var(--arfont);font-weight:400;direction:ltr;unicode-bidi:isolate;font-feature-settings:'calt' 0,'liga' 0,'ccmp' 0,'kern' 0}  /* LPMQ membungkus angka dgn bingkai hias (calt) — dimatikan, medali kita sendiri */
 .md use{fill:var(--nfill);stroke:var(--accent);stroke-width:.9}
 .ay.bm .md use{fill:var(--accent)}
-.ay.bm .md text{fill:var(--paper);stroke:var(--paper)}
+.ay.bm .md text{fill:var(--paper)}
 
 /* Waqaf / sajdah / rubu' */
 .wq{font-size:.5em;line-height:0;vertical-align:.62em;margin:0 .16em;color:color-mix(in srgb,var(--accent) 72%,var(--ink));font-weight:700;white-space:nowrap}
@@ -427,10 +427,10 @@ var pcv=document.createElement('canvas'),pctx=pcv.getContext('2d',{willReadFrequ
 function inkBox(str,fam){
   var k=fam+'|'+str;if(MM[k])return MM[k];
   var SZ=200,sc=100/SZ;
-  mctx.font="700 "+SZ+"px '"+fam+"'";mctx.textRendering='optimizeSpeed';mctx.direction='ltr';   /* optimizeSpeed = tanpa calt/liga, sama dgn CSS di .md text */
+  mctx.font="400 "+SZ+"px '"+fam+"'";mctx.textRendering='optimizeSpeed';mctx.direction='ltr';   /* optimizeSpeed = tanpa calt/liga, sama dgn CSS di .md text */
   var adv=mctx.measureText(str).width,ox=Math.ceil(SZ*.3),oy=Math.ceil(SZ*.85),W=Math.ceil(adv+SZ*.6),H=Math.ceil(SZ*1.4);
   pcv.width=W;pcv.height=H;
-  pctx.font="700 "+SZ+"px '"+fam+"'";pctx.textRendering='optimizeSpeed';pctx.direction='ltr';pctx.textAlign='left';pctx.textBaseline='alphabetic';pctx.fillStyle='#000';
+  pctx.font="400 "+SZ+"px '"+fam+"'";pctx.textRendering='optimizeSpeed';pctx.direction='ltr';pctx.textAlign='left';pctx.textBaseline='alphabetic';pctx.fillStyle='#000';
   pctx.fillText(str,ox,oy);
   var d=pctx.getImageData(0,0,W,H).data,x0=W,x1=-1,y0=H,y1=-1,x,y;
   for(y=0;y<H;y++)for(x=0;x<W;x++)if(d[(y*W+x)*4+3]>60){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
@@ -477,7 +477,7 @@ function calibrate(){
 }
 function ensureFonts(){
   if(!document.fonts||!document.fonts.load)return Promise.resolve();
-  var ps=FONT_ORDER.map(function(id){return document.fonts.load("700 24px '"+FONTS[id].f+"'",'١٢٣ ابت').catch(function(){})});
+  var ps=FONT_ORDER.map(function(id){return document.fonts.load("400 24px '"+FONTS[id].f+"'",'١٢٣ ابت').catch(function(){})});
   ps.push(document.fonts.load("700 24px 'Aref Ruqaa'",'سورة').catch(function(){}));
   return Promise.all(ps).then(function(){MM={}});   /* metrik lama (font belum siap) dibuang */
 }
