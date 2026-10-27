@@ -38,14 +38,20 @@ svg{display:block}
 .tx::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--tex);background-size:var(--texsz,360px);opacity:var(--texop);border-radius:inherit}
 
 /* ===================== HALAMAN DEPAN ===================== */
-#hero{text-align:center;padding:calc(26px + env(safe-area-inset-top)) 18px 10px}
-#hero-logo{width:min(84%,440px);height:auto;margin:0 auto;color:var(--accent2);filter:drop-shadow(0 2px 0 color-mix(in srgb,var(--paper) 70%,transparent));animation:logoIn 1s cubic-bezier(.2,.7,.2,1) both}
+#hero{padding:calc(14px + env(safe-area-inset-top)) 12px 4px}
+.hb{position:relative;text-align:center;padding:26px 30px 14px;background:var(--paper);border:2.5px solid var(--accent2);border-radius:12px;overflow:hidden;color:var(--accent2)}
+.hb::after{content:'';position:absolute;inset:5px;border:1px solid var(--accent);border-radius:8px;pointer-events:none}
+/* pola geometris bintang-8: warna mengikuti tema lewat mask */
+.hpat{position:absolute;inset:0;z-index:-1;background:var(--accent);opacity:.2;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6'%3E%3Crect x='7' y='7' width='30' height='30'/%3E%3Crect x='7' y='7' width='30' height='30' transform='rotate(45 22 22)'/%3E%3C/g%3E%3C/svg%3E") 0 0/44px 44px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6'%3E%3Crect x='7' y='7' width='30' height='30'/%3E%3Crect x='7' y='7' width='30' height='30' transform='rotate(45 22 22)'/%3E%3C/g%3E%3C/svg%3E") 0 0/44px 44px}
+.hc{position:absolute;width:38px;height:38px;color:var(--accent);z-index:1}.hc svg{width:100%;height:100%}
+.hc.tl{top:3px;left:3px}.hc.tr{top:3px;right:3px;transform:scaleX(-1)}.hc.bl{bottom:3px;left:3px;transform:scaleY(-1)}.hc.br{bottom:3px;right:3px;transform:scale(-1,-1)}
+.hrow{display:flex;align-items:center;gap:8px;justify-content:center;animation:logoIn 1s cubic-bezier(.2,.7,.2,1) both}
+.so{flex:1;min-width:0;height:14px;color:var(--accent);overflow:visible}.so.r{transform:scaleX(-1)}
+#hero-logo{flex:none;font-family:var(--titlefont);font-weight:700;font-size:clamp(34px,11.5vw,56px);line-height:1.5;white-space:nowrap;color:var(--accent2);direction:rtl}  /* gaya yang sama persis dengan judul surat (.sname .t) */
 @keyframes logoIn{from{opacity:0;transform:scale(.94) translateY(6px)}to{opacity:1;transform:none}}
-.orn{width:min(70%,300px);height:auto;margin:8px auto 0;color:var(--accent);animation:logoIn 1.2s .15s both}
-#credit{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:99px;color:var(--accent2);text-decoration:none;font-size:14px;font-weight:600;background:none;border:0;animation:logoIn 1.2s .3s both}
+.hsub{margin:8px 0 0;font-size:15px;color:var(--ink2);animation:logoIn 1.1s .15s both}
+#credit{display:inline-block;margin-top:6px;padding:3px 12px;border-radius:99px;color:var(--accent2);font-family:Georgia,'Times New Roman',serif;font-size:19px;font-weight:700;background:none;border:0;animation:logoIn 1.2s .3s both}
 #credit:hover,#credit:focus-visible{background:var(--soft);outline:none}
-#hero h1{margin:6px 0 0;font-size:22px;letter-spacing:.01em}
-#hero p{margin:2px 0 0;color:var(--ink2);font-size:13.5px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 #resume{margin:12px 14px 0}
@@ -243,6 +249,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
   <symbol id="medal" viewBox="0 0 48 48"><path id="medal-p" d=""/><circle cx="24" cy="24" r="15.4" fill="none" stroke="var(--accent)" stroke-width=".7" style="fill:none"/></symbol>
   <symbol id="rub" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="5" width="14" height="14"/><rect x="5" y="5" width="14" height="14" transform="rotate(45 12 12)"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></g></symbol>
   <symbol id="bsm-orn" viewBox="0 0 80 14"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M2 7H52" stroke-width="1.2"/><path d="M52 7q6-6 12 0t12 0" stroke-width="1.2"/><path d="M8 4H44" stroke-width=".7" opacity=".6"/></g><path d="M77 7l-3 3-3-3 3-3z" fill="currentColor"/></symbol>
+  <symbol id="side-orn" viewBox="0 0 120 16"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M2 8H92" stroke-width="1.5"/><circle cx="100" cy="8" r="5" stroke-width="1.4"/></g><circle cx="100" cy="8" r="1.8" fill="currentColor"/><path d="M110 8l4.5-4.5L119 8l-4.5 4.5z" fill="currentColor"/></symbol>
   <symbol id="orn-line" viewBox="0 0 240 16"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 8H100M140 8H236" stroke-width="1.2"/><path d="M20 8H92M148 8H220" stroke-width=".6" transform="translate(0 3)" opacity=".7"/></g><g fill="currentColor"><path d="M120 1l3.2 4.4 5.4-.8-.8 5.4L132 13l-5.4 1.2-1 5.2-4.6-3-4.6 3-1-5.2L110 13l4.2-3 -.8-5.4 5.4.8z" transform="translate(0 -1.4) scale(1 .85)"/><circle cx="104" cy="8" r="1.8"/><circle cx="136" cy="8" r="1.8"/></g></symbol>
 
   <!-- Sudut bingkai (viewBox 48x48, titik asal kiri-atas) -->
@@ -260,11 +267,19 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 <!-- ===================== HALAMAN DEPAN ===================== -->
 <div id="home" class="wrap">
   <header id="hero">
-    <svg id="hero-logo" viewBox="0 0 9800 3440" role="img" aria-label="Al-Quran Al-Karim"><use href="#logo-quran-karim" fill="url(#goldg)" stroke="url(#goldg)" stroke-width="26" stroke-linejoin="round"/></svg>
-    <svg class="orn" viewBox="0 0 240 16" aria-hidden="true"><use href="#orn-line"/></svg>
-    <div><button id="credit" type="button" aria-haspopup="dialog">❤Mannixs-21 💕</button></div>
-    <h1>Al-Qur'an Digital</h1>
-    <p>Mushaf Standar Indonesia · Kemenag RI</p>
+    <div class="hb tx" role="banner">
+      <i class="hpat" aria-hidden="true"></i>
+      <span class="hc tl" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#c-gulir"/></svg></span><span class="hc tr" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#c-gulir"/></svg></span>
+      <span class="hc bl" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#c-gulir"/></svg></span><span class="hc br" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#c-gulir"/></svg></span>
+      <h1 class="sr">Al-Qur'an Digital</h1>
+      <div class="hrow">
+        <svg class="so" viewBox="0 0 120 16" aria-hidden="true"><use href="#side-orn"/></svg>
+        <span id="hero-logo" role="img" aria-label="Al-Quran Al-Karim" lang="ar" dir="rtl">القرآن الكريم</span>
+        <svg class="so r" viewBox="0 0 120 16" aria-hidden="true"><use href="#side-orn"/></svg>
+      </div>
+      <p class="hsub">Mushaf : Arab &amp; Terjemahan</p>
+      <div><button id="credit" type="button" aria-haspopup="dialog">❤Mannixs-21 💕</button></div>
+    </div>
   </header>
   <div id="resume"></div>
   <div id="hbar">
