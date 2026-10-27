@@ -138,10 +138,10 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 
 /* Nomor ayat: medali + angka di tengah (posisi dihitung via canvas) */
 .md{display:inline-block;width:1.32em;height:1.32em;vertical-align:-.42em;margin:0 .14em}
-.md text{fill:var(--nink);font-family:var(--arfont);font-weight:700;direction:ltr;unicode-bidi:isolate;font-feature-settings:'calt' 0,'liga' 0,'ccmp' 0,'kern' 0}  /* LPMQ membungkus angka dgn bingkai hias (calt) — dimatikan, medali kita sendiri */
+.md text{text-rendering:geometricPrecision;fill:var(--nink);stroke:var(--nink);stroke-width:.22;paint-order:stroke;font-family:var(--arfont);font-weight:700;direction:ltr;unicode-bidi:isolate;font-feature-settings:'calt' 0,'liga' 0,'ccmp' 0,'kern' 0}  /* LPMQ membungkus angka dgn bingkai hias (calt) — dimatikan, medali kita sendiri */
 .md use{fill:var(--nfill);stroke:var(--accent);stroke-width:.9}
 .ay.bm .md use{fill:var(--accent)}
-.ay.bm .md text{fill:var(--paper)}
+.ay.bm .md text{fill:var(--paper);stroke:var(--paper)}
 
 /* Waqaf / sajdah / rubu' */
 .wq{font-size:.5em;line-height:0;vertical-align:.62em;margin:0 .16em;color:color-mix(in srgb,var(--accent) 72%,var(--ink));font-weight:700;white-space:nowrap}
@@ -242,15 +242,11 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 <!-- ===== Simbol SVG (dipakai berulang) ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
 <defs>
-  <!-- Logo kaligrafi "القرآن الكريم": path vektor disusun dari outline glyph LPMQ -->
-  <symbol id="logo-quran-karim" viewBox="-20 -2260 9800 3440"><path d="M468 -416Q499 -416 584 -308Q685 -208 878 -200H882Q900 -200 900 -100Q900 0 882 0H820Q728 0 644 -48Q600 45 588 48H580Q558 36 296 -64Q277 -84 272 -112V-156H268Q236 -156 92 -68Q64 -37 64 0V28Q64 44 164 624Q188 772 200 892L196 912Q196 1026 172 1160H164L156 1156L160 1116V1104Q160 933 8 164L4 128V92Q13 -55 76 -188Q182 -274 240 -312Q340 -366 408 -400Q456 -416 468 -416ZM376 -276Q376 -255 516 -208V-212Q470 -326 460 -336Q422 -332 376 -276Z M1196 125H1200Q1359 250 1372 281Q1324 365 1252 437H1248Q1194 379 1072 293Q1064 293 960 437L944 449H940Q875 409 800 345V341Q853 250 916 173Q975 220 1064 277Q1092 277 1132 205Q1174 144 1196 125ZM1085 -624H1089Q1229 -475 1229 -372V-264Q1184 -68 1136 -58Q1018 0 909 0H878Q860 0 860 -100Q860 -200 878 -200H969Q1161 -232 1161 -260Q1131 -334 1049 -420Q1072 -624 1085 -624Z M2076 -325Q2171 -238 2175 -238Q2200 -226 2268 -210Q2329 -201 2373 -201H2395L2429 -200H2433Q2472 -200 2472 -100Q2472 0 2433 0H2429Q2367 5 2316 5Q2265 5 2224 0Q2184 137 2156 196Q2116 298 1986 452Q1957 487 1912 523Q1760 649 1667 663Q1658 666 1602 669Q1532 669 1292 576Q1189 523 1181 502Q1187 480 1203 480Q1319 551 1352 555Q1362 558 1432 558H1463Q1506 558 1605 514Q1738 462 1853 384Q1926 338 2060 201Q2159 74 2159 53Q2149 0 2026 -124Q2048 -238 2073 -325Z M3615 -2126H3619Q3627 -2126 3627 -2114Q3577 -1926 3531 -1926Q3498 -1904 3445 -1880Q3392 -1856 3131 -1730L2591 -1450L2582 -1446Q2433 -1354 2379 -1290V-1286Q2400 -1255 2444 -1214Q2489 -1172 2696 -1035Q2903 -898 3081 -742Q3259 -585 3419 -418Q3592 -260 3648 -232Q3703 -204 3729 -200H3733Q3751 -200 3751 -100Q3751 0 3733 0Q3599 0 3494 -97Q3388 -194 3163 -432Q2956 -656 2907 -682H2899Q2961 -555 2975 -502L2991 -426Q2991 -270 2919 -122Q2868 -50 2675 -10Q2626 -3 2568 0H2431Q2413 0 2413 -100Q2413 -200 2431 -200H2533L2587 -201Q2731 -202 2907 -274Q2916 -277 2927 -290Q2872 -547 2515 -922Q2507 -938 2347 -1090L2343 -1098V-1134Q2343 -1321 2415 -1486Q2548 -1587 2775 -1702Q3404 -2016 3615 -2126Z M3909 -1809Q3948 -1736 4036 -1664L4042 -1653V-1647Q4042 -1627 3968 -1469L3972 -1446Q3972 -1442 4024 -996Q4076 -551 4080 -439Q4069 -300 4028 -159Q4005 -90 3935 -51Q3860 -12 3733 0H3729Q3711 0 3711 -100Q3711 -200 3729 -200H3750Q3777 -200 3891 -210Q4005 -221 4005 -273Q4005 -458 3976 -610Q3965 -697 3905 -1261V-1269Q3895 -1427 3887 -1487V-1494Q3887 -1546 3835 -1635V-1643Q3896 -1792 3909 -1809Z M4360 -1702 4381 -1701 4386 -1682 4385 -1651V-1642Q4385 -1502 4494 -696Q4516 -474 4516 -346Q4516 -325 4515 -307Q4510 -166 4444 -3H4435V-7Q4447 -78 4447 -101V-128Q4447 -378 4317 -1213Q4294 -1462 4294 -1521V-1529Q4342 -1678 4360 -1702Z M5681 -1264H5690Q5795 -1225 5858 -1171L5863 -1163Q5842 -1093 5762 -981Q5754 -981 5659 -1039Q5589 -1077 5589 -1082V-1096ZM6011 -880H6027Q6252 -552 6252 -297V-257Q6243 -75 6215 28Q6158 181 6001 264Q5811 389 5634 389H5612Q5295 389 5182 85Q5161 -10 5161 -103V-119Q5184 -304 5301 -477H5306Q5309 -477 5318 -466Q5246 -316 5246 -257V-220Q5246 52 5465 143Q5547 169 5634 169H5669Q5840 169 5977 89Q6091 37 6174 -52L6189 -103Q6189 -363 5974 -668V-681Q5974 -718 6011 -880Z M6619 -1697H6640L6645 -1677V-1647Q6645 -1527 6788 -696Q6822 -440 6822 -309Q6822 -167 6762 -2H6753V-6Q6762 -77 6762 -100Q6762 -329 6593 -1207Q6559 -1474 6559 -1521Q6602 -1672 6619 -1697ZM7291 -2231Q7297 -2231 7297 -2223V-2218Q7239 -2135 7178 -2105Q7127 -2073 6973 -2036Q6954 -2034 6945 -2032Q6883 -2017 6808 -2017Q6744 -2017 6626 -2046L6469 -2094Q6412 -2035 6366 -2000Q6359 -2001 6359 -2006V-2009Q6402 -2087 6450 -2128Q6483 -2158 6522 -2194Q6687 -2126 6752 -2120Q6765 -2118 6875 -2109H6930Q7078 -2128 7156 -2154L7212 -2177Q7268 -2212 7289 -2231Z M7754 -325Q7849 -238 7853 -238Q7878 -226 7946 -210Q8007 -201 8051 -201H8073L8107 -200H8111Q8150 -200 8150 -100Q8150 0 8111 0H8107Q8045 5 7994 5Q7943 5 7902 0Q7862 137 7834 196Q7794 298 7664 452Q7635 487 7590 523Q7438 649 7345 663Q7336 666 7280 669Q7210 669 6970 576Q6867 523 6859 502Q6865 480 6881 480Q6997 551 7030 555Q7040 558 7110 558H7141Q7184 558 7283 514Q7416 462 7531 384Q7604 338 7738 201Q7837 74 7837 53Q7827 0 7704 -124Q7726 -238 7751 -325Z M8709 -1281Q8857 -1166 8873 -1145Q8826 -1058 8757 -981H8753L8601 -1105Q8558 -1105 8513 -1021Q8463 -953 8453 -949H8445Q8422 -972 8289 -1061V-1069Q8398 -1233 8409 -1233Q8561 -1134 8569 -1113Q8601 -1113 8625 -1165Q8677 -1241 8709 -1281ZM8961 0Q8868 0 8756 -13Q8645 -26 8548 -84L8496 -120Q8223 0 8113 0H8107Q8089 0 8083 -100Q8082 -117 8082 -131Q8082 -200 8107 -200Q8154 -200 8219 -204Q8284 -207 8380 -244Q8372 -260 8364 -304Q8364 -376 8440 -568Q8593 -742 8672 -756Q8738 -756 8768 -584Q8772 -528 8772 -512Q8772 -456 8668 -264V-256Q8724 -228 8821 -214Q8918 -200 8961 -200Q8979 -200 8979 -100Q8979 0 8961 0ZM8464 -420Q8486 -365 8560 -316Q8672 -361 8672 -388Q8672 -492 8620 -548H8612Q8559 -538 8468 -436Q8464 -429 8464 -420Z M9137 -1809Q9176 -1736 9264 -1664L9270 -1653V-1647Q9270 -1627 9196 -1469L9200 -1446Q9200 -1442 9252 -996Q9304 -551 9308 -439Q9297 -300 9256 -159Q9233 -90 9163 -51Q9088 -12 8961 0H8957Q8939 0 8939 -100Q8939 -200 8957 -200H8978Q9005 -200 9119 -210Q9233 -221 9233 -273Q9233 -458 9204 -610Q9193 -697 9133 -1261V-1269Q9123 -1427 9115 -1487V-1494Q9115 -1546 9063 -1635V-1643Q9124 -1792 9137 -1809Z M9588 -1702 9609 -1701 9614 -1682 9613 -1651V-1642Q9613 -1502 9722 -696Q9744 -474 9744 -346Q9744 -325 9743 -307Q9738 -166 9672 -3H9663V-7Q9675 -78 9675 -101V-128Q9675 -378 9545 -1213Q9522 -1462 9522 -1521V-1529Q9570 -1678 9588 -1702Z"/></symbol>
-  <linearGradient id="goldg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent2)"/><stop offset=".5" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent2)"/></linearGradient>
 
-  <symbol id="medal" viewBox="0 0 48 48"><path id="medal-p" d=""/><circle cx="24" cy="24" r="15.4" fill="none" stroke="var(--accent)" stroke-width=".7" style="fill:none"/></symbol>
+  <symbol id="medal" viewBox="0 0 48 48"><path id="medal-p" d=""/><circle cx="24" cy="24" r="17.4" fill="none" stroke="var(--accent)" stroke-width=".7" style="fill:none"/></symbol>
   <symbol id="rub" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="5" width="14" height="14"/><rect x="5" y="5" width="14" height="14" transform="rotate(45 12 12)"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></g></symbol>
   <symbol id="bsm-orn" viewBox="0 0 80 14"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M2 7H52" stroke-width="1.2"/><path d="M52 7q6-6 12 0t12 0" stroke-width="1.2"/><path d="M8 4H44" stroke-width=".7" opacity=".6"/></g><path d="M77 7l-3 3-3-3 3-3z" fill="currentColor"/></symbol>
   <symbol id="side-orn" viewBox="0 0 120 16"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M2 8H92" stroke-width="1.5"/><circle cx="100" cy="8" r="5" stroke-width="1.4"/></g><circle cx="100" cy="8" r="1.8" fill="currentColor"/><path d="M110 8l4.5-4.5L119 8l-4.5 4.5z" fill="currentColor"/></symbol>
-  <symbol id="orn-line" viewBox="0 0 240 16"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 8H100M140 8H236" stroke-width="1.2"/><path d="M20 8H92M148 8H220" stroke-width=".6" transform="translate(0 3)" opacity=".7"/></g><g fill="currentColor"><path d="M120 1l3.2 4.4 5.4-.8-.8 5.4L132 13l-5.4 1.2-1 5.2-4.6-3-4.6 3-1-5.2L110 13l4.2-3 -.8-5.4 5.4.8z" transform="translate(0 -1.4) scale(1 .85)"/><circle cx="104" cy="8" r="1.8"/><circle cx="136" cy="8" r="1.8"/></g></symbol>
 
   <!-- Sudut bingkai (viewBox 48x48, titik asal kiri-atas) -->
   <symbol id="c-klasik" viewBox="0 0 48 48"><g fill="none" stroke="currentColor"><path d="M2 46V2H46" stroke-width="2.2"/><path d="M9 46V9H46" stroke-width="1"/></g><path d="M16 16l5 5-5 5-5-5z" fill="currentColor"/><circle cx="46" cy="2" r="1.8" fill="currentColor"/><circle cx="2" cy="46" r="1.8" fill="currentColor"/></symbol>
@@ -424,22 +420,37 @@ function nTxt(s){return s.toLowerCase().replace(/[^a-z0-9À-ɏ ]+/g,' ').replace
 var mctx=document.createElement('canvas').getContext('2d');
 var MM={};  /* cache ukuran tinta angka */
 function fontName(){return FONTS[S.font].f}
+/* Ukur tinta angka SEBENARNYA dengan memindai piksel (actualBoundingBox bawaan canvas ditambah padding ±1,6% em
+   sehingga angka terukur lebih besar dari aslinya). Hasil dinormalkan ke font 100px:
+   w,h = lebar/tinggi tinta; cx = pusat tinta di kanan titik jangkar; cy = pusat tinta di atas garis dasar. */
+var pcv=document.createElement('canvas'),pctx=pcv.getContext('2d',{willReadFrequently:true});
 function inkBox(str,fam){
   var k=fam+'|'+str;if(MM[k])return MM[k];
-  mctx.font="700 100px '"+fam+"'";mctx.textRendering='optimizeSpeed';mctx.direction='ltr';   /* optimizeSpeed = tanpa calt/liga, sama dgn CSS di .md text */
-  mctx.textAlign='left';mctx.textBaseline='alphabetic';
-  var m=mctx.measureText(str);
-  var L=m.actualBoundingBoxLeft,R=m.actualBoundingBoxRight,A=m.actualBoundingBoxAscent,D=m.actualBoundingBoxDescent;
-  return MM[k]={cx:(R-L)/2,cy:(A-D)/2,w:R+L,h:A+D};
+  var SZ=200,sc=100/SZ;
+  mctx.font="700 "+SZ+"px '"+fam+"'";mctx.textRendering='optimizeSpeed';mctx.direction='ltr';   /* optimizeSpeed = tanpa calt/liga, sama dgn CSS di .md text */
+  var adv=mctx.measureText(str).width,ox=Math.ceil(SZ*.3),oy=Math.ceil(SZ*.85),W=Math.ceil(adv+SZ*.6),H=Math.ceil(SZ*1.4);
+  pcv.width=W;pcv.height=H;
+  pctx.font="700 "+SZ+"px '"+fam+"'";pctx.textRendering='optimizeSpeed';pctx.direction='ltr';pctx.textAlign='left';pctx.textBaseline='alphabetic';pctx.fillStyle='#000';
+  pctx.fillText(str,ox,oy);
+  var d=pctx.getImageData(0,0,W,H).data,x0=W,x1=-1,y0=H,y1=-1,x,y;
+  for(y=0;y<H;y++)for(x=0;x<W;x++)if(d[(y*W+x)*4+3]>60){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+  if(x1<0)return {cx:0,cy:0,w:0,h:0};   /* tidak ada tinta: tidak di-cache */
+  x1++;y1++;
+  return MM[k]={cx:((x0+x1)/2-ox)*sc,cy:(oy-(y0+y1)/2)*sc,w:(x1-x0)*sc,h:(y1-y0)*sc};
 }
-/* Hitung x,y,font-size (satuan viewBox 48) agar pusat tinta angka = pusat medali */
+/* Konfigurasi ukuran angka medali (satuan viewBox 48):
+   ring = radius cincin dalam, pad = jarak aman tinta ke cincin,
+   cap  = tinggi maksimum tinta (pecahan dari 48) menurut jumlah digit */
+var MEDAL={ring:17.4,pad:1.6,cap:{1:.50,2:.44,3:.36}};
+/* Ukuran ditentukan dari KOTAK TINTA hasil ukur (bukan font-size): digit LPMQ sangat pendek (±0,29em).
+   s = min(batas tinggi per jumlah digit, batas agar sudut kotak tinta tetap di dalam cincin).
+   Pusat TINTA angka = pusat medali (24,24). */
 function medalCalc(num){
-  var s=toAr(num),b=inkBox(s,fontName());
-  var fs=48*.4;                               // ≈0.48em dari teks Arab bila medali 1.2em
-  var maxW=27,sc=fs/100;
-  if(b.w*sc>maxW){fs=maxW/b.w*100;sc=fs/100}
-  if(!b.w){return[24,30,fs]}                  // font belum siap: perkiraan, dihitung ulang saat siap
-  return[24-b.cx*sc,24+b.cy*sc,fs];
+  var str=toAr(num),b=inkBox(str,fontName()),rf=MEDAL.ring-MEDAL.pad;
+  if(!b.w||!b.h){return[24,35.7,80]}                   // font belum siap: perkiraan, dihitung ulang saat siap
+  var cap=MEDAL.cap[Math.min(3,str.length)]*48;
+  var k=Math.min(cap/b.h,2*rf/Math.hypot(b.w,b.h));   // satuan viewBox per piksel ukur (font 100px)
+  return[24-b.cx*k,24+b.cy*k,100*k];
 }
 function medalSVG(num,cls){
   var c=medalCalc(num);
