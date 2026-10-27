@@ -365,6 +365,9 @@ var THEMES={
   mbiru:{n:'Malam Biru',dark:1,bg:'#0b1220',paper:'#131c2e',ink:'#e8e4d6',ink2:'#9fa8b8',accent:'#d4b25a',accent2:'#6fa3d8',nfill:'#1c2a44',nink:'#e6cf8e'},
   mhijau:{n:'Malam Hijau',dark:1,bg:'#08130f',paper:'#0f1f19',ink:'#e6e8da',ink2:'#9db3a6',accent:'#d4b25a',accent2:'#5fbf94',nfill:'#17302a',nink:'#e6cf8e'},
   mungu:{n:'Malam Ungu',dark:1,bg:'#120d1d',paper:'#1b1428',ink:'#ece6dc',ink2:'#b0a4c4',accent:'#d4b25a',accent2:'#a98be0',nfill:'#2a1f40',nink:'#e6cf8e'},
+  hijautua:{n:'Hijau Tua',dark:1,tex:'p-hijau',bg:'#0a2a1e',paper:'#0f3b2a',ink:'#f1ecd8',ink2:'#b9cdb8',accent:'#d9b85c',accent2:'#7fd1a3',nfill:'#16503a',nink:'#f0dc9a'},
+  birutua:{n:'Biru Tua',dark:1,tex:'p-biru',bg:'#08183a',paper:'#0d2554',ink:'#eef0f6',ink2:'#aebbd6',accent:'#d9b85c',accent2:'#8fb8f2',nfill:'#173773',nink:'#f0dc9a'},
+  merahtua:{n:'Merah Tua',dark:1,tex:'p-merah',bg:'#2a0a10',paper:'#3d0f18',ink:'#f6ece4',ink2:'#d3b4b2',accent:'#d9b25a',accent2:'#f0a08e',nfill:'#591a26',nink:'#f0dc9a'},
   pekat:{n:'Hitam Pekat',dark:1,bg:'#000000',paper:'#0a0a0a',ink:'#e9e6dc',ink2:'#a09c90',accent:'#cfae58',accent2:'#8fa6a0',nfill:'#1a1a1a',nink:'#e6cf8e'}
 };
 var THEME_ORDER=Object.keys(THEMES);
@@ -378,9 +381,34 @@ var TEXTURES={
   perkamen:{n:'Perkamen',bf:'.011',oct:3,a:1.9,b:-.7,sz:560,op:.12},
   basah:{n:'Basah/Kering',bf:'.0045 .007',oct:2,a:3.2,b:-1.4,sz:640,op:.14,blur:1.5},
   buram:{n:'Buram/Matte',bf:'1.1',oct:2,a:1,b:-.38,sz:260,op:.12},
+  'p-emas':{n:'Pasir Emas',bf:'.85',oct:2,a:2.6,b:-1,sz:220,op:.4,col:['176,128,40','230,190,100']},
+  'p-putih':{n:'Pasir Putih',bf:'.9',oct:2,a:2.6,b:-1,sz:220,op:.4,col:['120,110,90','255,248,230']},
+  'p-merah':{n:'Pasir Merah',bf:'.8',oct:2,a:2.6,b:-1,sz:220,op:.4,col:['160,60,40','235,120,90']},
+  'p-hitam':{n:'Pasir Hitam',bf:'.95',oct:2,a:2.6,b:-1,sz:220,op:.38,col:['30,30,30','175,175,175']},
+  'p-pink':{n:'Pasir Merah Muda',bf:'.85',oct:2,a:2.6,b:-1,sz:220,op:.4,col:['190,90,110','245,170,185']},
+  'p-hijau':{n:'Pasir Hijau',bf:'.8',oct:2,a:2.6,b:-1,sz:220,op:.4,col:['70,110,60','150,210,130']},
+  'p-biru':{n:'Pasir Biru',bf:'.9',oct:2,a:2.6,b:-1,sz:220,op:.4,col:['50,100,150','130,185,235']},
+  'w-jati':{n:'Kayu Jati',bf:'.007 .2',oct:4,a:2.8,b:-1.15,sz:360,op:.42,col:['118,72,28','224,172,108']},
+  'w-mahoni':{n:'Kayu Mahoni',bf:'.004 .55',oct:3,a:2.8,b:-1.15,sz:360,op:.42,col:['112,38,24','214,118,94']},
+  'w-eboni':{n:'Kayu Eboni',bf:'.004 .6',oct:3,a:2.8,b:-1.15,sz:360,op:.38,col:['26,20,18','172,162,152']},
+  'w-pinus':{n:'Kayu Pinus',bf:'.016 .07',oct:5,a:2.6,b:-1.05,sz:420,op:.4,col:['186,142,76','240,214,158']},
+  'w-walnut':{n:'Kayu Walnut',bf:'.016 .06',oct:5,a:2.6,b:-1.05,sz:420,op:.42,col:['72,44,30','192,150,122']},
+  'w-tegak':{n:'Serat Tegak Oak',bf:'.5 .005',oct:3,a:2.8,b:-1.15,sz:360,op:.4,col:['150,110,52','232,196,128']},
+  'w-papan-jati':{n:'Papan Jati',bf:'.007 .24',oct:4,a:2.8,b:-1.15,sz:360,op:.42,pl:3,col:['118,72,28','224,172,108']},
+  'w-papan-merah':{n:'Papan Mahoni',bf:'.5 .005',oct:3,a:2.8,b:-1.15,sz:360,op:.42,pl:4,pv:1,col:['112,38,24','214,118,94']},
+  'c-lembut':{n:'Awan Lembut',bf:'.007',oct:5,a:2.4,b:-.95,sz:640,op:.38,blur:2,col:['84,126,178','226,238,255']},
+  'c-cirrus':{n:'Awan Tipis',bf:'.004 .04',oct:5,a:2.6,b:-1.05,sz:640,op:.38,blur:.8,col:['84,126,178','226,238,255']},
+  'c-gumpal':{n:'Awan Gumpal',bf:'.011',oct:4,a:3.2,b:-1.3,sz:520,op:.4,blur:1.2,col:['84,126,178','226,238,255']},
+  'c-kartun':{n:'Awan Kartun',tile:'ckartun',sz:140,op:.4},
+  'c-garis':{n:'Awan Garis',tile:'cgaris',sz:140,op:.5},
+  'r-busur':{n:'Pelangi Busur',tile:'rbusur',sz:120,op:.4},
+  'r-awan':{n:'Pelangi & Awan',tile:'rawan',sz:120,op:.42},
+  'r-garis':{n:'Pelangi Garis',tile:'rgaris',sz:48,op:.38},
+  'r-sisik':{n:'Pelangi Sisik',tile:'rsisik',sz:120,op:.36},
+  'r-pita':{n:'Pelangi Pita',tile:'rpita',sz:120,op:.4},
   polos:{n:'Polos'}
 };
-var TEX_ORDER=['halus','debu','serat','bintik','perkamen','basah','buram','polos'];
+var TEX_ORDER=['halus','debu','serat','bintik','perkamen','basah','buram','p-emas','p-putih','p-merah','p-hitam','p-pink','p-hijau','p-biru','w-jati','w-mahoni','w-eboni','w-pinus','w-walnut','w-tegak','w-papan-jati','w-papan-merah','c-lembut','c-cirrus','c-gumpal','c-kartun','c-garis','r-busur','r-awan','r-garis','r-sisik','r-pita','polos'];
 
 /* FRAMES: id → nama + simbol sudut (#c-xxx di <defs>) + aturan CSS [data-frame=id] .fx */
 var FRAMES={
@@ -486,11 +514,35 @@ function ensureFonts(){
 /* =====================================================================
    TEMA / TEKSTUR / BINGKAI / FONT — penerapan
    ===================================================================== */
+/* Motif awan & pelangi bergambar: ubin SVG kecil, statis (ringan) */
+var RB=['#e0524d','#f08a3c','#f2c53d','#5cb56a','#4a90d9','#7a5bc7'];
+var CLD='M-20 14A8 8 0 0 1 -20 -2A12 12 0 0 1 2 -8A14 14 0 0 1 24 2A8 8 0 0 1 22 14Z';
+function cloudAt(x,y,k,cls){return "<path class='"+cls+"' transform='translate("+x+" "+y+") scale("+k+")' d='"+CLD+"'/>"}
+function rbArcs(cx,cy,r0,st,sw){var d='';RB.forEach(function(c,i){var r=r0-i*st;d+="<path d='M"+(cx-r)+" "+cy+"A"+r+" "+r+" 0 0 1 "+(cx+r)+" "+cy+"' fill='none' stroke='"+c+"' stroke-width='"+sw+"'/>"});return d}
+var TILES={
+  ckartun:function(){return {w:140,h:100,d:cloudAt(35,32,1.15,'c')+cloudAt(105,78,.95,'c')+cloudAt(108,18,.5,'c')+cloudAt(30,86,.55,'c')}},
+  cgaris:function(){return {w:140,h:100,d:cloudAt(35,32,1.15,'o')+cloudAt(105,78,.95,'o')+cloudAt(108,18,.5,'o')+cloudAt(30,86,.55,'o')+"<path class='o' d='M22 34Q30 28 38 34M70 80Q76 75 82 80'/>"}},
+  rbusur:function(){return {w:120,h:120,d:rbArcs(30,50,29,4.5,4.2)+rbArcs(90,110,29,4.5,4.2)}},
+  rawan:function(){return {w:120,h:80,d:rbArcs(60,66,38,5.5,5)+cloudAt(30,66,.85,'c')+cloudAt(90,66,.85,'c')}},
+  rgaris:function(){var d='';RB.forEach(function(c,i){d+="<rect x='0' y='"+(i*8)+"' width='48' height='5' fill='"+c+"'/>"});return {w:48,h:48,d:d}},
+  rsisik:function(){var d='',cs=[[0,0],[60,0],[120,0],[30,30],[90,30],[0,60],[60,60],[120,60],[30,90],[90,90],[0,120],[60,120],[120,120]];cs.forEach(function(q){RB.forEach(function(c,i){d+="<circle cx='"+q[0]+"' cy='"+q[1]+"' r='"+(30-i*5)+"' fill='none' stroke='"+c+"' stroke-width='3.6'/>"})});return {w:120,h:120,d:d}},
+  rpita:function(){var d='';RB.forEach(function(c,i){var y=16+i*4.5;d+="<path d='M0 "+y+"Q30 "+(y-14)+" 60 "+y+"T120 "+y+"' fill='none' stroke='"+c+"' stroke-width='3.4'/>"});return {w:120,h:60,d:d}}
+};
+function tileURI(T,dark){
+  var col='rgb('+(dark?'226,238,255':'84,126,178')+')',t=TILES[T.tile]();
+  var svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+t.w+"' height='"+t.h+"' viewBox='0 0 "+t.w+" "+t.h+"'><style>.c{fill:"+col+"}.o{fill:none;stroke:"+col+";stroke-width:1.8;stroke-linecap:round}</style>"+t.d+"</svg>";
+  return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
+}
+function plank(T,c){
+  if(!T.pl)return '';var h='',i,k=T.sz/T.pl,v;
+  for(i=0;i<T.pl;i++){v=(i*k+1).toFixed(1);h+=T.pv?"<line x1='"+v+"' y1='0' x2='"+v+"' y2='"+T.sz+"'":"<line x1='0' y1='"+v+"' x2='"+T.sz+"' y2='"+v+"'";h+=" stroke='rgb("+c+")' stroke-width='2' stroke-opacity='.85'/>"}
+  return h;
+}
 function texURI(id,dark){
-  var T=TEXTURES[id];if(!T||!T.bf)return 'none';
-  var c=dark?'255,238,205':'80,52,14',rgb=c.split(',').map(function(v){return (v/255).toFixed(3)}).join(' ');
+  var T=TEXTURES[id];if(T&&T.tile)return tileURI(T,dark);if(!T||!T.bf)return 'none';
+  var c=T.col?T.col[dark?1:0]:(dark?'255,238,205':'80,52,14'),rgb=c.split(',').map(function(v){return (v/255).toFixed(3)}).join(' ');
   var m='0 0 0 0 '+rgb.split(' ')[0]+' 0 0 0 0 '+rgb.split(' ')[1]+' 0 0 0 0 '+rgb.split(' ')[2]+' '+T.a+' 0 0 0 '+T.b;
-  var svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+T.sz+"' height='"+T.sz+"'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='"+T.bf+"' numOctaves='"+T.oct+"' seed='"+(id.length*7+3)+"' stitchTiles='stitch'/>"+(T.blur?"<feGaussianBlur stdDeviation='"+T.blur+"'/>":'')+"<feColorMatrix values='"+m+"'/></filter><rect width='100%' height='100%' filter='url(#f)'/></svg>";
+  var svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+T.sz+"' height='"+T.sz+"'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='"+T.bf+"' numOctaves='"+T.oct+"' seed='"+(id.length*7+3)+"' stitchTiles='stitch'/>"+(T.blur?"<feGaussianBlur stdDeviation='"+T.blur+"'/>":'')+"<feColorMatrix values='"+m+"'/></filter><rect width='100%' height='100%' filter='url(#f)'/>"+plank(T,c)+"</svg>";
   return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
 }
 function frameHTML(id){
@@ -798,7 +850,7 @@ function sheetClick(e){
   if(S[k]===v)return;
   keepAnchor(function(){S[k]=v;
     if(k==='font'){applyFontSizes();relayoutMedals();ensureFonts().then(function(){calibrate();keepAnchor(function(){applyFontSizes();relayoutMedals()})})}
-    else if(k==='theme'){applyTheme()}
+    else if(k==='theme'){if(THEMES[v].tex)S.tex=THEMES[v].tex;applyTheme()}
     else if(k==='tex'){applyTheme()}
     else if(k==='frame'){applyFrame()}
   });
