@@ -182,6 +182,39 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 .fx .cn.bl{bottom:-2px;left:-2px;transform:scaleY(-1)}.fx .cn.br{bottom:-2px;right:-2px;transform:scale(-1,-1)}
 .fx .tc{position:absolute;top:-6px;left:50%;width:84px;height:28px;transform:translateX(-50%);display:none}
 .fx .tc svg{width:100%;height:100%}
+
+/* ===== Bintang menyala mengelilingi garis bingkai ===== */
+.fx .stl{position:absolute;inset:0;pointer-events:none}
+.stl .sk{position:absolute;display:block}
+.stl .sk::before,.stl .sk::after{content:'';position:absolute;inset:0}
+.stl .sk.t,.stl .sk.b{height:18px;left:44px;right:44px}
+.stl .sk.t{top:-9px}.stl .sk.b{bottom:-9px}
+.stl .sv{position:sticky;top:0;display:block;height:100vh;height:100dvh;margin:44px 0}
+.stl .sk.l,.stl .sk.r{top:0;bottom:0;width:18px}
+.stl .sk.l{left:-9px}.stl .sk.r{right:-9px}
+.stl .sk.t::before,.stl .sk.b::before{background:var(--sdh) 0 50%/26px 18px repeat-x;opacity:.5}
+.stl .sk.l::before,.stl .sk.r::before{background:var(--sdv) 50% 0/18px 26px repeat-y;opacity:.5}
+.stl .sk.t::after,.stl .sk.b::after{background:var(--slh) 0 50%/26px 18px repeat-x;
+  -webkit-mask:linear-gradient(90deg,transparent 28%,#000 50%,transparent 72%) 0 0/320px 100% repeat-x;
+  mask:linear-gradient(90deg,transparent 28%,#000 50%,transparent 72%) 0 0/320px 100% repeat-x}
+.stl .sk.l::after,.stl .sk.r::after{background:var(--slv) 50% 0/18px 26px repeat-y;
+  -webkit-mask:linear-gradient(180deg,transparent 28%,#000 50%,transparent 72%) 0 0/100% 320px repeat-y;
+  mask:linear-gradient(180deg,transparent 28%,#000 50%,transparent 72%) 0 0/100% 320px repeat-y}
+/* searah jarum jam: atas → kanan, kanan ↓, bawah ←, kiri ↑ */
+.stl .sk.t::after{animation:skR 5s linear infinite}
+.stl .sk.r::after{animation:skD 5s linear infinite}
+.stl .sk.b::after{animation:skL 5s linear infinite}
+.stl .sk.l::after{animation:skU 5s linear infinite}
+@keyframes skR{to{-webkit-mask-position:320px 0;mask-position:320px 0}}
+@keyframes skL{to{-webkit-mask-position:-320px 0;mask-position:-320px 0}}
+@keyframes skD{to{-webkit-mask-position:0 320px;mask-position:0 320px}}
+@keyframes skU{to{-webkit-mask-position:0 -320px;mask-position:0 -320px}}
+[data-frame=mihrab] .stl .sk.t{display:none}
+[data-frame=mihrab] .stl .sv{margin-top:96px}
+[data-frame=ganda] .stl .sk.t,[data-frame=ganda] .stl .sk.b,[data-frame=putus] .stl .sk.t,[data-frame=putus] .stl .sk.b,[data-frame=tipis] .stl .sk.t,[data-frame=tipis] .stl .sk.b{left:12px;right:12px}
+[data-frame=ganda] .stl .sv,[data-frame=putus] .stl .sv,[data-frame=tipis] .stl .sv{margin:12px 0}
+.pv .fx .stl{display:none}
+@media (prefers-reduced-motion:reduce){.stl .sk::after{animation:none;-webkit-mask:none;mask:none;opacity:.55}}
 [data-frame=klasik] .fx{border:1px solid var(--accent);outline:1px solid color-mix(in srgb,var(--accent) 40%,transparent);outline-offset:-5px}
 [data-frame=sulur] .fx{border:1px solid var(--accent2);border-radius:10px}
 [data-frame=bintang] .fx{border:1px solid var(--accent)}
@@ -493,8 +526,16 @@ function texURI(id,dark){
   var svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+T.sz+"' height='"+T.sz+"'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='"+T.bf+"' numOctaves='"+T.oct+"' seed='"+(id.length*7+3)+"' stitchTiles='stitch'/>"+(T.blur?"<feGaussianBlur stdDeviation='"+T.blur+"'/>":'')+"<feColorMatrix values='"+m+"'/></filter><rect width='100%' height='100%' filter='url(#f)'/></svg>";
   return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
 }
+function starURI(c,lit,vert){
+  var st=lit?'M13 1Q14.2 7.8 21 9Q14.2 10.2 13 17Q11.8 10.2 5 9Q11.8 7.8 13 1Z':'M13 4Q13.7 8.3 17.5 9Q13.7 9.7 13 14Q12.3 9.7 8.5 9Q12.3 8.3 13 4Z';
+  var g='<defs><radialGradient id="h"><stop offset="0" stop-color="'+c+'" stop-opacity=".75"/><stop offset="1" stop-color="'+c+'" stop-opacity="0"/></radialGradient></defs>'
+    +(lit?'<circle cx="13" cy="9" r="9" fill="url(#h)"/>':'')+'<path d="'+st+'" fill="'+c+'"/>'+(lit?'<circle cx="13" cy="9" r="1.3" fill="#fffbe6"/>':'');
+  var svg=vert?'<svg xmlns="http://www.w3.org/2000/svg" width="18" height="26" viewBox="0 0 18 26"><g transform="matrix(0 1 -1 0 18 0)">'+g+'</g></svg>'
+    :'<svg xmlns="http://www.w3.org/2000/svg" width="26" height="18" viewBox="0 0 26 18">'+g+'</svg>';
+  return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
+}
 function frameHTML(id){
-  var F=FRAMES[id],h='';
+  var F=FRAMES[id],h='<span class="stl"><i class="sk t"></i><i class="sk b"></i><span class="sv"><i class="sk l"></i><i class="sk r"></i></span></span>';
   ['tl','tr','bl','br'].forEach(function(p){h+='<span class="cn '+p+'"><svg viewBox="0 0 48 48"><use href="#'+F.c+'"/></svg></span>'});
   if(F.top)h+='<span class="tc"><svg viewBox="0 0 120 40" preserveAspectRatio="none"><use href="#'+F.top+'"/></svg></span>';
   return h;
@@ -505,7 +546,7 @@ function applyTheme(){
   r.colorScheme=T.dark?'dark':'light';r.setProperty('--h1',T.dark?'13%':'26%');r.setProperty('--h2',T.dark?'6%':'13%');r.setProperty('--h3',T.dark?'4%':'9%');r.setProperty('--h4',T.dark?'11%':'24%');
   $('metatheme').setAttribute('content',T.bg);
   var tx=TEXTURES[S.tex];
-  r.setProperty('--tex',texURI(S.tex,!!T.dark));r.setProperty('--texop',tx.op||0);r.setProperty('--texsz',(tx.sz||300)+'px');
+  r.setProperty('--tex',texURI(S.tex,!!T.dark));r.setProperty('--sdh',starURI(T.accent,0,0));r.setProperty('--sdv',starURI(T.accent,0,1));r.setProperty('--slh',starURI(T.accent,1,0));r.setProperty('--slv',starURI(T.accent,1,1));r.setProperty('--texop',tx.op||0);r.setProperty('--texsz',(tx.sz||300)+'px');
 }
 function applyFrame(){
   var m=$('mushaf');m.dataset.frame=S.frame;m.querySelector('.fx').innerHTML=frameHTML(S.frame);
