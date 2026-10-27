@@ -803,6 +803,27 @@ if (!TEXTURES[S.tex]) S.tex = DEF.tex;
 if (!FRAMES[S.frame]) S.frame = DEF.frame;
 if (!FONTS[S.font]) S.font = DEF.font;
 const saveS = () => store('qd.settings.v2', S);
+/* Kalibrasi ukuran per font: tiap font Arab punya ukuran visual berbeda pada px yang sama.
+   Lebar teks contoh diukur lalu dinormalkan ke font acuan (Uthman Hafs, selalu tersedia karena tertanam),
+   sehingga ukuran Arab terlihat sama di semua font. Terjemahan dikali faktor yang SAMA,
+   jadi perbandingan Arab : Latin selalu tetap, dan Latin otomatis menyesuaikan saat font diganti. */
+const FK = {};
+const trFor = ar => clamp(Math.round(12 + (ar - 22) * 12 / 38), 12, 24);
+const fk = () => FK[S.font] || 1;
+function setSizes(){
+  const r = document.documentElement.style, k = fk();
+  r.setProperty('--ar-size', (S.ar * k).toFixed(1) + 'px');
+  r.setProperty('--tr-size', (S.tr * k).toFixed(1) + 'px');
+}
+async function calibrate(){
+  const CAL = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ مَٰلِكِ يَوْمِ ٱلدِّينِ';
+  const cx = document.createElement('canvas').getContext('2d');
+  const w = st => { cx.font = '100px ' + st; return cx.measureText(CAL).width; };
+  try { await Promise.all(Object.values(FONTS).map(f => document.fonts.load('100px ' + f.stack.split(',')[0], CAL))); } catch(e){}
+  const ref = w(FONTS.hafs.stack);
+  for (const id in FONTS){ const x = w(FONTS[id].stack); FK[id] = x > 0 ? clamp(Math.round(ref / x * 100) / 100, .75, 1.3) : 1; }
+  setSizes(); centerMedals(document);
+}
 const theme = (id=S.theme) => THEMES.find(t=>t.id===id) || THEMES[0];
 
 function frameColors(fid, th){
@@ -822,7 +843,7 @@ function applyAll(){
   r.setProperty('--f1', f1); r.setProperty('--f2', f2);
   r.setProperty('--cs', FRAMES[S.frame].cs + 'px');
   const tv = texVars(S.tex, th); for (const k in tv) r.setProperty(k, tv[k]);
-  r.setProperty('--ar-size', S.ar+'px'); r.setProperty('--tr-size', S.tr+'px');
+  setSizes();
   r.setProperty('--f-ar', FONTS[S.font].stack);
   r.colorScheme = th.dark ? 'dark' : 'light';
   $('meta[name=theme-color]').setAttribute('content', th.paper);
@@ -1118,7 +1139,7 @@ function step(dir){
 }
 function applyText(){
   const r = document.documentElement.style;
-  r.setProperty('--ar-size', S.ar + 'px'); r.setProperty('--tr-size', S.tr + 'px');
+  setSizes();
   document.body.classList.toggle('notr', !S.showTr);
 }
 // jaga agar ayat yang sedang dibaca tidak "lompat" saat ukuran teks / terjemahan berubah
@@ -1134,7 +1155,7 @@ function syncBar(){
 }
 function setSize(v){
   S.ar = clamp(Math.round(v), 22, 60);
-  S.tr = clamp(Math.round(12 + (S.ar - 22) * 12 / 38), 12, 24);   // terjemahan ikut membesar/mengecil secara proporsional
+  S.tr = trFor(S.ar);   // terjemahan ikut membesar/mengecil secara proporsional
   keepAnchor(applyText); syncBar(); saveS();
 }
 function toggleTr(){
@@ -1255,7 +1276,7 @@ function renderSettings(){
         `<button role="radio" aria-checked="${S.font===id}" data-f="${id}"><span><b style="font-size:.92rem">${f.name}</b></span><span class="fa" lang="ar" style="font-family:${f.stack}">بِسْمِ اللّٰهِ</span></button>`).join('')}</div>
       <button class="btn ghost" id="reset" style="width:100%">Kembalikan ke bawaan</button>`;
     const upd = () => { applyAll(); saveS(); };
-    $('#rAr').oninput = e => { S.ar = +e.target.value; $('#oAr').textContent = S.ar+'px'; upd(); };
+    $('#rAr').oninput = e => { S.ar = +e.target.value; S.tr = trFor(S.ar); $('#oAr').textContent = S.ar+'px'; $('#rTr').value = S.tr; $('#oTr').textContent = S.tr+'px'; upd(); };
     $('#rTr').oninput = e => { S.tr = +e.target.value; $('#oTr').textContent = S.tr+'px'; upd(); };
     $('#swTr').onclick = e => { S.showTr = !S.showTr; e.currentTarget.setAttribute('aria-checked', S.showTr); upd(); };
     $$('.fonts button').forEach(x => x.onclick = () => { S.font = x.dataset.f; upd(); renderSettings(); $(`.fonts [data-f="${S.font}"]`).focus(); });
@@ -1321,6 +1342,8 @@ window.addEventListener('pagehide', () => { if (R && R.interacted) persistCur();
 if (document.fonts){ const refit = () => { FG++; centerMedals(document); }; document.fonts.addEventListener && document.fonts.addEventListener('loadingdone', refit); document.fonts.ready && document.fonts.ready.then(refit); }
 applyAll();
 route();
+calibrate();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(calibrate);
 </script>
 </body>
 </html>
